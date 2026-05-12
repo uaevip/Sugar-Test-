@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>متابعة قياس السكر</title>
+<style>
+:root{--green:#0f766e;--blue:#2563eb;--red:#dc2626;--bg:#f6f8fb;--card:#fff;--text:#111827;--muted:#6b7280;--line:#e5e7eb}
+html,body{width:100%;max-width:100%;overflow-x:hidden}*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif;background:linear-gradient(180deg,#eef7ff,#f9fafb);color:var(--text);touch-action:manipulation}.app{width:100%;max-width:980px;margin:0 auto;padding:14px 12px 90px;overflow:hidden}.hero{background:linear-gradient(135deg,#0f766e,#2563eb);color:white;border-radius:24px;padding:18px;box-shadow:0 10px 25px #0002}.hero h1{margin:0 0 8px;font-size:24px}.hero p{margin:0;color:#e7f7ff;font-size:14px}.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:14px;margin-top:14px;box-shadow:0 8px 20px #00000012;width:100%;max-width:100%;overflow:hidden}.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;width:100%}.field{display:flex;flex-direction:column;gap:6px;min-width:0;width:100%}label{font-weight:800;font-size:13px;color:#374151}input,select,textarea{display:block;width:100%;max-width:100%;min-width:0;border:1px solid #d1d5db;border-radius:16px;padding:13px 12px;font-size:16px;background:#fff;color:#111827;outline:none}textarea{min-height:82px;resize:vertical}.full{grid-column:1/-1}.buttons{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;margin-top:12px;width:100%}button{appearance:none;-webkit-appearance:none;border:0;border-radius:17px;padding:14px 10px;font-size:15px;font-weight:900;color:white;background:#374151;cursor:pointer;min-height:50px;touch-action:manipulation;position:relative;z-index:5}button:active{transform:scale(.98)}.save{background:var(--green)}.add{background:var(--blue)}.print{background:#7c3aed}.undo{background:#f59e0b}.redo{background:#0891b2}.clear{background:var(--red)}.ghost{background:#475569}.table-wrap{overflow:auto;border-radius:18px;border:1px solid var(--line);margin-top:12px}table{width:100%;border-collapse:collapse;min-width:760px;background:white}th,td{border-bottom:1px solid var(--line);padding:10px 8px;text-align:center;font-size:13px;vertical-align:middle}th{background:#ecfeff;color:#0f172a;font-weight:900;position:sticky;top:0;z-index:1}td.notes{text-align:right;max-width:220px;white-space:normal}.badge{display:inline-block;border-radius:999px;padding:5px 10px;font-weight:900;font-size:12px}.ok{background:#dcfce7;color:#166534}.warn{background:#fef3c7;color:#92400e}.bad{background:#fee2e2;color:#991b1b}.actions{display:flex;gap:6px;justify-content:center}.mini{min-height:34px;padding:7px 9px;border-radius:11px;font-size:12px}.edit{background:#2563eb}.del{background:#dc2626}.bottom{position:fixed;left:0;right:0;bottom:0;background:#ffffffee;backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:10px;z-index:999}.bottom .inner{max-width:980px;margin:auto;display:grid;grid-template-columns:1fr 1fr;gap:9px}.hint{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.7}@media(max-width:640px){html,body{overflow-x:hidden}.app{padding:10px 10px 96px;width:100%;overflow:hidden}.hero{border-radius:20px;padding:16px}.hero h1{font-size:21px}.grid{grid-template-columns:minmax(0,1fr)}.buttons{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.card{padding:12px;border-radius:18px}input,select,textarea{font-size:16px;padding:12px}.table-wrap{max-height:none}table{min-width:720px}th,td{font-size:12px;padding:8px 6px}.bottom .inner{grid-template-columns:1fr 1fr}}
+input[type=date],input[type=time]{-webkit-appearance:none;appearance:none;line-height:1.3;height:52px;text-align:right;direction:ltr;padding-left:12px;padding-right:12px}
+select{appearance:auto;-webkit-appearance:menulist}
+@media(max-width:430px){.app{padding-left:8px;padding-right:8px}.card{padding:11px}.buttons{gap:8px}button{font-size:14px;padding:12px 6px}.hero h1{font-size:20px}.hero p{font-size:13px}}
+@media print{
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  body{background:white;color:#111827}
+  .app{max-width:none;padding:0}
+  .hero,.card.form-card,.bottom,.actions,.no-print{display:none!important}
+  .print-area{display:block!important}
+  .card{box-shadow:none;border:0;margin:0;padding:0;background:white}
+  .table-wrap{overflow:visible;border:0;border-radius:0;margin-top:8px}
+  table{min-width:0;width:100%;border-collapse:collapse;table-layout:fixed;background:white}
+  th{background:#0f766e!important;color:white!important;font-weight:900;border:1px solid #0b4f4a!important;padding:7px 5px;font-size:9.5pt}
+  td{border:1px solid #94a3b8!important;padding:6px 5px;font-size:9pt;word-wrap:break-word}
+
+  /* طباعة احترافية: لون لكل سطر بالتناوب */
+  tbody tr:nth-child(odd) td{background:#ffffff!important}
+  tbody tr:nth-child(even) td{background:#f0fdfa!important}
+  tbody tr:nth-child(4n) td{background:#eff6ff!important}
+  tbody tr:hover td{background:inherit!important}
+  td:nth-child(4){font-weight:900;color:#0f766e!important;font-size:10pt}
+  td:nth-child(5){font-weight:900}
+  tr{break-inside:avoid;page-break-inside:avoid}
+  td.notes{text-align:right;max-width:none}
+  .badge{border-radius:12px;padding:3px 7px;font-size:8.5pt;border:1px solid #cbd5e1}
+  .print-head{border:2px solid #0f766e;border-radius:18px;padding:13px 15px;margin-bottom:10px;background:linear-gradient(135deg,#d1fae5,#eff6ff 55%,#fef3c7)!important;display:flex;justify-content:space-between;align-items:center;gap:12px;box-shadow:0 4px 12px #00000018}
+  .print-head h2{margin:0;font-size:18pt;color:#0f766e;font-weight:900}
+  .print-sub{margin-top:4px;font-size:10pt;color:#334155;font-weight:700}
+  .print-date{font-size:10pt;color:#0f172a;text-align:left;line-height:1.7}
+  .print-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:8px 0 10px}
+  .pstat{border:1px solid #cbd5e1;border-radius:12px;padding:8px;text-align:center;background:#f8fafc!important}
+  .pstat b{display:block;font-size:15pt;color:#0f766e}.pstat span{font-size:8.5pt;color:#475569;font-weight:700}
+  .print-footer{display:block!important;text-align:center;margin-top:10px;font-size:8.5pt;color:#475569;border-top:2px solid #0f766e;padding-top:7px;font-weight:700}
+  @page{size:A4 portrait;margin:10mm}
+}
+.print-area,.print-footer{display:none}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="hero no-print"><h1>📋 متابعة قياس السكر</h1><p>إدخال سريع مع التاريخ والوقت تلقائيًا — محفوظ على نفس الجهاز.</p></div>
+  <div class="card form-card">
+    <div class="grid">
+      <div class="field"><label>نوع القياس</label><select id="type"><option value="fasting">صيام</option><option value="after_breakfast">بعد الفطور بساعة</option><option value="after_lunch">بعد الغداء بساعة</option><option value="after_dinner">بعد العشاء بساعة</option><option value="random">قياس عادي</option></select></div>
+      <div class="field"><label>نتيجة السكر</label><input id="sugar" type="number" inputmode="decimal" placeholder="مثال: 120"></div>
+      <div class="field"><label>التاريخ</label><input id="date" type="date"></div>
+      <div class="field"><label>الوقت</label><input id="time" type="time"></div>
+      <div class="field full"><label>ملاحظات</label><textarea id="notes" placeholder="اكتب ملاحظاتك هنا..."></textarea></div>
+    </div>
+    <div class="buttons">
+      <button type="button" class="save" data-action="save">💾 حفظ القياس</button>
+      <button type="button" class="add" data-action="new">➕ إدخال جديد</button>
+      <button type="button" class="undo" data-action="undo">↩️ تراجع</button>
+      <button type="button" class="redo" data-action="redo">↪️ إعادة</button>
+      <button type="button" class="print" data-action="print">🖨️ طباعة A4</button>
+      <button type="button" class="clear" data-action="clear">🗑️ مسح الكل</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 class="no-print" style="margin:0 0 8px;font-size:18px">📊 السجل</h2>
+    <div class="print-area">
+      <div class="print-head">
+        <div><h2>تقرير متابعة قياس السكر</h2><div class="print-sub">سجل القياسات حسب التاريخ والوقت والملاحظات</div></div>
+        <div class="print-date" id="printDate"></div>
+      </div>
+      <div class="print-stats">
+        <div class="pstat"><b id="pCount">0</b><span>إجمالي القياسات</span></div>
+        <div class="pstat"><b id="pLast">-</b><span>آخر نتيجة</span></div>
+        <div class="pstat"><b id="pHigh">0</b><span>قياسات مرتفعة</span></div>
+        <div class="pstat"><b id="pFasting">0</b><span>قياسات صيام</span></div>
+      </div>
+    </div>
+    <div class="table-wrap" id="tableWrap"><table id="recordsTable"><thead><tr><th>التاريخ</th><th>الوقت</th><th>نوع القياس</th><th>النتيجة</th><th>الحالة</th><th>ملاحظات</th><th class="no-print">إجراءات</th></tr></thead><tbody id="tbody"></tbody></table></div>
+    <div class="print-footer">تم إنشاء التقرير من سجل متابعة السكر — البيانات محفوظة على نفس الجهاز.</div>
+  </div>
+</div>
+<div class="bottom no-print"><div class="inner" style="grid-template-columns:1fr"><button type="button" class="save" data-action="save">💾 حفظ القياس</button></div></div>
+<script>
+(function(){
+'use strict';
+const KEY='sugar_tracker_ios_final_v1';
+let records=[], editingId=null, undoStack=[], redoStack=[];
+const $=id=>document.getElementById(id);
+function pad(n){return String(n).padStart(2,'0')}
+function nowFill(){const d=new Date();$('date').value=d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());$('time').value=pad(d.getHours())+':'+pad(d.getMinutes())}
+function load(){try{records=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){records=[]} render()}
+function persist(){localStorage.setItem(KEY,JSON.stringify(records))}
+function snapshot(){undoStack.push(JSON.stringify(records)); if(undoStack.length>50)undoStack.shift(); redoStack=[]}
+function typeName(v){return {fasting:'صيام',after_breakfast:'بعد الفطور بساعة',after_lunch:'بعد الغداء بساعة',after_dinner:'بعد العشاء بساعة',random:'قياس عادي'}[v]||v}
+function status(rec){let val=Number(rec.sugar); let limit=rec.type==='fasting'?95:140; if(!val)return ['warn','غير محدد']; if(val<=limit)return ['ok','طبيعي']; if(val<=limit+25)return ['warn','مرتفع بسيط']; return ['bad','مرتفع']}
+function render(){const tb=$('tbody'); tb.innerHTML=''; if(records.length===0){tb.innerHTML='<tr><td colspan="7" style="padding:20px;color:#6b7280">لا توجد قياسات محفوظة</td></tr>';return} records.slice().sort((a,b)=>(b.date+b.time).localeCompare(a.date+a.time)).forEach(r=>{const st=status(r); const tr=document.createElement('tr'); tr.innerHTML='<td>'+esc(r.date)+'</td><td>'+esc(r.time)+'</td><td>'+esc(typeName(r.type))+'</td><td><b>'+esc(r.sugar)+'</b></td><td><span class="badge '+st[0]+'">'+st[1]+'</span></td><td class="notes">'+esc(r.notes||'')+'</td><td class="actions no-print"><button type="button" class="mini edit" data-edit="'+r.id+'">تعديل</button><button type="button" class="mini del" data-del="'+r.id+'">حذف</button></td>'; tb.appendChild(tr)})}
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function clearForm(){editingId=null;$('sugar').value='';$('notes').value='';$('type').value='fasting';nowFill();$('sugar').focus({preventScroll:false})}
+function saveRecord(){const sugar=$('sugar').value.trim(); if(!sugar){alert('اكتب نتيجة السكر أولاً');return} snapshot(); const rec={id:editingId||Date.now().toString(36)+Math.random().toString(36).slice(2),type:$('type').value,sugar:sugar,date:$('date').value,time:$('time').value,notes:$('notes').value.trim()}; const idx=records.findIndex(x=>x.id===rec.id); if(idx>=0)records[idx]=rec; else records.push(rec); persist(); render(); clearForm(); alert('تم الحفظ ✅')}
+function editRecord(id){const r=records.find(x=>x.id===id); if(!r)return; editingId=id;$('type').value=r.type;$('sugar').value=r.sugar;$('date').value=r.date;$('time').value=r.time;$('notes').value=r.notes||''; window.scrollTo({top:0,behavior:'smooth'})}
+function delRecord(id){if(!confirm('حذف هذا القياس؟'))return; snapshot(); records=records.filter(x=>x.id!==id); persist(); render()}
+function undo(){if(!undoStack.length)return; redoStack.push(JSON.stringify(records)); records=JSON.parse(undoStack.pop()); persist(); render()}
+function redo(){if(!redoStack.length)return; undoStack.push(JSON.stringify(records)); records=JSON.parse(redoStack.pop()); persist(); render()}
+function clearAll(){if(!records.length)return; if(!confirm('هل تريد مسح كل السجل؟'))return; snapshot(); records=[]; persist(); render()}
+function preparePrint(){
+  const d=new Date();
+  const fmt=d.toLocaleString('ar-AE',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});
+  const sorted=records.slice().sort((a,b)=>(b.date+b.time).localeCompare(a.date+a.time));
+  const high=records.filter(r=>status(r)[0]==='bad'||status(r)[0]==='warn').length;
+  const fasting=records.filter(r=>r.type==='fasting').length;
+  if($('printDate')) $('printDate').innerHTML='تاريخ الطباعة:<br><b>'+esc(fmt)+'</b>';
+  if($('pCount')) $('pCount').textContent=records.length;
+  if($('pLast')) $('pLast').textContent=sorted[0]?sorted[0].sugar:'-';
+  if($('pHigh')) $('pHigh').textContent=high;
+  if($('pFasting')) $('pFasting').textContent=fasting;
+}
+function printPage(){preparePrint(); window.print()}
+function act(name){if(name==='save')saveRecord(); if(name==='new')clearForm(); if(name==='undo')undo(); if(name==='redo')redo(); if(name==='print')printPage(); if(name==='clear')clearAll()}
+function bindTap(el,fn){let moved=false; el.addEventListener('touchmove',()=>moved=true,{passive:true}); el.addEventListener('touchstart',()=>{moved=false},{passive:true}); el.addEventListener('touchend',e=>{if(!moved){e.preventDefault();fn(e)}},{passive:false}); el.addEventListener('click',fn,false)}
+document.querySelectorAll('[data-action]').forEach(btn=>bindTap(btn,()=>act(btn.getAttribute('data-action'))));
+document.addEventListener('click',e=>{const ed=e.target.closest('[data-edit]'); const del=e.target.closest('[data-del]'); if(ed)editRecord(ed.getAttribute('data-edit')); if(del)delRecord(del.getAttribute('data-del'))});
+$('type').addEventListener('change',()=>{if(!$('date').value||!$('time').value)nowFill()});
+window.addEventListener('beforeprint',preparePrint);
+nowFill(); load(); preparePrint();
+})();
+</script>
+</body>
+</html>
